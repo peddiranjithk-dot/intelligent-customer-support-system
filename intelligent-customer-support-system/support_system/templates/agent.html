@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Support · Agent Dashboard</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+  <style>
+    .dash { padding: 32px 40px; max-width: 1000px; margin: 0 auto; }
+    .dash-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+    .dash-header h1 { font-family: 'Space Grotesk', sans-serif; font-size: 20px; margin: 0; }
+    .dash-header a { color: var(--text-dim); text-decoration: none; font-size: 13px; border-bottom: 1px dotted var(--border); }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { text-align: left; padding: 12px 10px; border-bottom: 1px solid var(--border); font-size: 13.5px; }
+    th { font-family: 'JetBrains Mono', monospace; text-transform: uppercase; font-size: 10.5px; letter-spacing: 0.06em; color: var(--text-dim); }
+    tr:hover td { background: var(--panel-raised); }
+    .priority { font-family: 'JetBrains Mono', monospace; font-size: 11px; padding: 3px 8px; border-radius: 5px; }
+    .priority.high { background: rgba(225,85,84,0.15); color: var(--red); }
+    .priority.normal { background: rgba(232,163,61,0.12); color: var(--amber); }
+    select { background: var(--panel-raised); color: var(--text); border: 1px solid var(--border); border-radius: 6px; padding: 6px 8px; font-family: 'Inter', sans-serif; font-size: 12.5px; }
+    .empty-state { padding: 60px 0; text-align: center; color: var(--text-dim); font-size: 14px; }
+  </style>
+</head>
+<body>
+  <div class="dash">
+    <div class="dash-header">
+      <h1>Escalated Tickets</h1>
+      <a href="/">← Back to chat</a>
+    </div>
+    <div id="ticket-table-wrap"></div>
+  </div>
+
+  <script>
+    async function loadTickets() {
+      const res = await fetch('/api/tickets');
+      const tickets = await res.json();
+      const wrap = document.getElementById('ticket-table-wrap');
+
+      if (tickets.length === 0) {
+        wrap.innerHTML = '<div class="empty-state">No tickets yet. Escalated chats will show up here.</div>';
+        return;
+      }
+
+      const rows = tickets.map(t => `
+        <tr>
+          <td>#${t.id}</td>
+          <td>${t.subject}</td>
+          <td><span class="priority ${t.priority}">${t.priority}</span></td>
+          <td>${new Date(t.created_at).toLocaleString()}</td>
+          <td>
+            <select data-id="${t.id}" onchange="updateStatus(this)">
+              ${['open', 'in_progress', 'resolved', 'closed'].map(s =>
+                `<option value="${s}" ${s === t.status ? 'selected' : ''}>${s}</option>`
+              ).join('')}
+            </select>
+          </td>
+        </tr>
+      `).join('');
+
+      wrap.innerHTML = `
+        <table>
+          <thead>
+            <tr><th>ID</th><th>Subject</th><th>Priority</th><th>Created</th><th>Status</th></tr>
+          </thead>
+          <tbody>${rows}</tbody>
+        </table>
+      `;
+    }
+
+    async function updateStatus(select) {
+      const id = select.dataset.id;
+      await fetch(`/api/tickets/${id}/status`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ status: select.value }),
+      });
+    }
+
+    loadTickets();
+    setInterval(loadTickets, 8000);
+  </script>
+</body>
+</html>

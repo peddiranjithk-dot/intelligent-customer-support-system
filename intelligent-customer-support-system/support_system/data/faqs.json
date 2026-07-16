@@ -1,0 +1,111 @@
+[
+  {
+    "intent": "order_status",
+    "patterns": [
+      "where is my order",
+      "track my order",
+      "order status",
+      "has my order shipped",
+      "when will my package arrive",
+      "order tracking number",
+      "check my order"
+    ],
+    "response": "You can track your order in real time from the 'My Orders' section of your account. Most orders ship within 1-2 business days and arrive within 5-7 business days."
+  },
+  {
+    "intent": "return_refund",
+    "patterns": [
+      "how do I return an item",
+      "I want a refund",
+      "return policy",
+      "refund my order",
+      "cancel my order and get money back",
+      "exchange a product",
+      "item damaged, want refund"
+    ],
+    "response": "You can request a return or refund within 30 days of delivery from the 'My Orders' page. Refunds are processed within 5-7 business days after we receive the item."
+  },
+  {
+    "intent": "payment_issue",
+    "patterns": [
+      "my payment failed",
+      "card was declined",
+      "double charged",
+      "billing problem",
+      "payment not going through",
+      "invoice question",
+      "update my payment method"
+    ],
+    "response": "Sorry about the trouble with payment. Please check that your card details and billing address are correct. If you were charged twice, the duplicate charge will auto-reverse within 3-5 business days."
+  },
+  {
+    "intent": "account_help",
+    "patterns": [
+      "reset my password",
+      "can't log in",
+      "forgot my username",
+      "update my email address",
+      "delete my account",
+      "change my account details",
+      "verify my account"
+    ],
+    "response": "You can reset your password using the 'Forgot Password' link on the login page. For email or account changes, go to Account Settings."
+  },
+  {
+    "intent": "product_info",
+    "patterns": [
+      "does this product come in other colors",
+      "what are the dimensions",
+      "is this item in stock",
+      "product specifications",
+      "warranty information",
+      "is this compatible with"
+    ],
+    "response": "Product details, size charts, and warranty information are listed on each product page under the 'Specifications' tab. Stock availability updates in real time."
+  },
+  {
+    "intent": "shipping_info",
+    "patterns": [
+      "shipping cost",
+      "do you ship internationally",
+      "delivery time",
+      "shipping options",
+      "express delivery available",
+      "shipping to another country"
+    ],
+    "response": "We offer standard (5-7 days) and express (1-2 days) shipping. International shipping is available to most countries; costs are calculated at checkout."
+  },
+  {
+    "intent": "greeting",
+    "patterns": [
+      "hello",
+      "hi",
+      "hey there",
+      "good morning",
+      "good afternoon",
+      "is anyone there"
+    ],
+    "response": "Hi there! I'm your support assistant. I can help with orders, returns, payments, account issues, and product questions. What do you need help with?"
+  },
+  {
+    "intent": "thanks",
+    "patterns": [
+      "thank you",
+      "thanks a lot",
+      "appreciate the help",
+      "thanks for the info"
+    ],
+    "response": "You're welcome! Is there anything else I can help you with?"
+  },
+  {
+    "intent": "human_agent",
+    "patterns": [
+      "talk to a human",
+      "speak to a real person",
+      "connect me to an agent",
+      "I need a human",
+      "this isn't helping"
+    ],
+    "response": "Of course — I'm escalating this to a human support agent now. They'll follow up with you shortly."
+  }
+]

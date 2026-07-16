@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Support · Chat</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand"><span class="dot">●</span>Helpdesk</div>
+
+      <div class="session-block">
+        <span class="label">Session</span>
+        <span class="value">{{ session_id }}</span>
+      </div>
+
+      <div class="topics">
+        <div class="label">Quick topics</div>
+        <button class="topic-chip" data-prompt="Where is my order?">Track an order</button>
+        <button class="topic-chip" data-prompt="How do I return an item?">Return / refund</button>
+        <button class="topic-chip" data-prompt="My payment failed">Payment issue</button>
+        <button class="topic-chip" data-prompt="I can't log in">Account help</button>
+        <button class="topic-chip" data-prompt="I want to talk to a human">Talk to a human</button>
+      </div>
+
+      <div class="sidebar-footer">
+        <a href="/agent">Agent dashboard →</a>
+      </div>
+    </aside>
+
+    <main class="chat-column">
+      <div class="chat-header">
+        <h1>Customer Support</h1>
+        <div class="status-pill">assistant online</div>
+      </div>
+
+      <div class="messages" id="messages"></div>
+
+      <form class="composer" id="composer-form">
+        <input
+          id="composer-input"
+          type="text"
+          autocomplete="off"
+          placeholder="Describe your issue..."
+        />
+        <button id="send-btn" type="submit">Send</button>
+      </form>
+    </main>
+  </div>
+
+  <script>window.__SESSION_ID__ = {{ session_id | tojson }};</script>
+  <script src="{{ url_for('static', filename='chat.js') }}"></script>
+</body>
+</html>
